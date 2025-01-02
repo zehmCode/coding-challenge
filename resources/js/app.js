@@ -6,11 +6,11 @@
 
 import './bootstrap';
 import { createApp } from 'vue';
-import ExampleComponent from './components/ExampleComponent.vue';
+import ProductFormComponent from './components/ProductFormComponent.vue';
 
 const app = createApp({
     components: {
-        ExampleComponent
+        ProductFormComponent
     }
 });
 
