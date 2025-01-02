@@ -3,7 +3,7 @@
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-3xl font-semibold text-gray-800">Product List</h2>
         <a
-          href="/products"
+          href="/create-product"
           class="bg-indigo-600 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >
           Add Product
@@ -90,7 +90,7 @@
       fetchProducts() {
         this.loading = true;
         axios
-          .get("/api/products", {
+          .get("http://127.0.0.1:8000/api/products", {
             params: { sortBy: this.sortBy, category_id: this.categoryId },
           })
           .then((response) => {
@@ -102,7 +102,7 @@
           });
       },
       fetchCategories() {
-        axios.get("/api/categories").then((response) => {
+        axios.get("http://127.0.0.1:8000/api/categories").then((response) => {
           this.categories = response.data;
         });
       },

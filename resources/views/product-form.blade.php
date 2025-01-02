@@ -11,7 +11,7 @@
     </head>
     <body>
         <div id="app">
-            <product-list-component></product-list-component>
+            <product-form-component></product-form-component>
         </div>
     </body>
 </html>
