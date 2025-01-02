@@ -7,10 +7,12 @@
 import './bootstrap';
 import { createApp } from 'vue';
 import ProductFormComponent from './components/ProductFormComponent.vue';
+import ProductListComponent from './components/ProductListComponent.vue';
 
 const app = createApp({
     components: {
-        ProductFormComponent
+        ProductFormComponent,
+        ProductListComponent
     }
 });
 
