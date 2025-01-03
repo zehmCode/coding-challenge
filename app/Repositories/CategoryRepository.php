@@ -6,7 +6,7 @@ use App\Models\Category;
 
 class CategoryRepository implements ICategoryRepository
 {
-    public function all($filters = [])
+    public function all(array $filters = []): \Illuminate\Support\Collection
     {
         $query = Category::query();
 
@@ -17,14 +17,19 @@ class CategoryRepository implements ICategoryRepository
         return $query->get();
     }
 
-    public function create(array $data)
+    public function create(array $data): Category
     {
         return Category::create($data);
     }
 
-    public function find($id)
+    public function find(int $id): Category
     {
         return Category::findOrFail($id);
+    }
+
+    public function exists(int $id): bool
+    {
+        return Category::where('id', $id)->exists();
     }
 
 }

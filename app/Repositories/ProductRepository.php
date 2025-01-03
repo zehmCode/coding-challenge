@@ -6,7 +6,7 @@ use App\Models\Product;
 
 class ProductRepository implements IProductRepository
 {
-    public function all($sortBy = null, $filters = [])
+    public function all(string $sortBy = null,array $filters = []): \Illuminate\Support\Collection
     {
         $query = Product::query();
 
@@ -21,12 +21,12 @@ class ProductRepository implements IProductRepository
         return $query->get();
     }
 
-    public function create(array $data)
+    public function create(array $data): Product
     {
         return Product::create($data);
     }
 
-    public function find($id)
+    public function find($id): Product
     {
         return Product::findOrFail($id);
     }

@@ -3,29 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\ICategoryRepository;
+use App\Services\CategoryService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    protected $categoryRepository;
+    protected ICategoryRepository $categoryRepository;
+    protected CategoryService $categoryService;
 
-    public function __construct(ICategoryRepository $categoryRepository)
+    public function __construct(ICategoryRepository $categoryRepository,CategoryService $categoryService)
     {
         $this->categoryRepository = $categoryRepository;
+        $this->categoryService = $categoryService;
     }
 
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $categories = $this->categoryRepository->all($request->only('parent_category_id'));
         return response()->json($categories);
     }
 
-    public function create(Request $request)
+    public function create(Request $request): JsonResponse
     {
-        $data = $request->validate([
-            'name' => 'required|string',
-            'parent_category_id' => 'nullable|exists:categories,id',
-        ]);
+        $data = $this->categoryService->validateAndPrepareData($request->all());
 
         $category = $this->categoryRepository->create($data);
 

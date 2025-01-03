@@ -94,8 +94,15 @@
                 for (const key in this.form) {
                     formData.append(key, this.form[key]);
                 }
-                await axios.post("http://127.0.0.1:8000/api/products", formData);
-                window.location.href = "/";
+
+                console.log("Submitting form data:", formData);
+
+                try {
+                    await axios.post("http://127.0.0.1:8000/api/products", formData);
+                    window.location.href = "/";
+                } catch (error) {
+                    console.error("Error creating product:", error.response.data);
+                }
             },
             handleFileUpload(event) {
                 this.form.image = event.target.files[0];

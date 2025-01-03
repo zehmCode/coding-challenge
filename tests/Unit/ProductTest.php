@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-use App\Models\Product;
 use App\Repositories\ProductRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -15,7 +14,7 @@ class ProductTest extends TestCase
     {
         parent::setUp();
 
-        $this->productRepository = new ProductRepository(new Product());
+        $this->productRepository = app(ProductRepository::class);
     }
 
     public function test_creating_product()

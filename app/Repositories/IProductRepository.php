@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 interface IProductRepository
 {
-    public function all($sortBy = null, $filters = []);
-    public function create(array $data);
-    public function find($id);
+    public function all(string $sortBy = null,array $filters = []): \Illuminate\Support\Collection;
+    public function create(array $data): \App\Models\Product;
+    public function find(int $id): \App\Models\Product;
 }

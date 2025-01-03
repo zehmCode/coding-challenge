@@ -3,18 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\IProductRepository;
+use App\Services\ProductService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    protected $productRepository;
+    protected IProductRepository $productRepository;
+    protected ProductService $productService;
 
-    public function __construct(IProductRepository $productRepository)
+    public function __construct(IProductRepository $productRepository, ProductService $productService)
     {
         $this->productRepository = $productRepository;
+        $this->productService = $productService;
     }
 
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $sortBy = $request->query('sortBy', 'asc');
         $filters = $request->only('category_id');
@@ -24,19 +28,9 @@ class ProductController extends Controller
         return response()->json($products, 200);
     }
 
-    public function create(Request $request)
+    public function create(Request $request): JsonResponse
     {
-        $data = $request->validate([
-            'name' => 'required|string',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'category_id' => 'nullable|exists:categories,id',
-        ]);
-
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('images', 'public');
-        }
+        $data = $this->productService->validateAndPrepareData($request->all(), $request->file('image'));
 
         $product = $this->productRepository->create($data);
 

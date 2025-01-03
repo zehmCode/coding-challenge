@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-use App\Models\Category;
 use App\Repositories\CategoryRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -16,7 +15,7 @@ class CategoryTest extends TestCase
     {
         parent::setUp();
 
-        $this->categoryRepository = new CategoryRepository(new Category());
+        $this->categoryRepository = app(CategoryRepository::class);
     }
 
     public function test_creating_product()
@@ -26,7 +25,7 @@ class CategoryTest extends TestCase
             'parent_category_id' => null,
         ];
 
-        $product = $this->categoryRepository->create($data);
+        $category = $this->categoryRepository->create($data);
 
         $this->assertDatabaseHas('categories', $data);
     }

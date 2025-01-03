@@ -10,12 +10,12 @@ class Category extends Model
     use HasFactory;
     protected $fillable = ['name', 'parent_category_id'];
 
-    public function parent()
+    public function parent(): Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Category::class, 'parent_category_id');
     }
 
-    public function children()
+    public function children(): Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Category::class, 'parent_category_id');
     }
